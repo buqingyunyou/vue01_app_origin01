@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01列表过滤（watch版本）</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>人员列表</h2>
+      <input type="text" v-model="keyword" />
+      <ul>
+        <li v-for="p in persons2" :key="p.id">
+          {{p.name}} - {{p.age}} - {{p.gender}}
+        </li>
+      </ul>
+    </div>
+
+    <!-- 引入vue.js -->
+    <script src="../lib/vue.js"></script>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          keyword: "",
+          // 源数据
+          persons: [
+            { id: "001", name: "马冬梅", age: 19, gender: "女" },
+            { id: "002", name: "周冬雨", age: 20, gender: "女" },
+            { id: "003", name: "周杰伦", age: 21, gender: "男" },
+            { id: "004", name: "帅邓伦", age: 22, gender: "男" },
+          ],
+          // 须收集数据
+          persons2: [],
+        },
+
+        // 监视keyword数据
+        watch: {
+          keyword: {
+            immediate: true,
+            handler(val) {
+              const filterPersons = this.persons.filter((person) => {
+                return person.name.indexOf(val) !== -1;
+              });
+
+              this.persons2 = filterPersons;
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

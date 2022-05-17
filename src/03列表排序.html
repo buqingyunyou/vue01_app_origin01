@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>03列表排序</title>
+  </head>
+  <body>
+    <!-- 
+    列表排序：
+      常见需求（商品搜索列表中的商品排序）
+   -->
+    <div id="app">
+      <input type="text" placeholder="请输入搜索内容" v-model="keyword" />
+      <ul>
+        <li v-for="item,index in searchUsers" :key="item.id">
+          {{item.id}}-{{item.name}}-{{item.age}}
+        </li>
+      </ul>
+      <button @click="sort(1)">年龄排序</button>
+      <button @click="sort(2)">年龄降序</button>
+      <button @click="sort(0)">原本顺序</button>
+    </div>
+    <script src="../lib/vue.js"></script>
+
+    <script>
+      new Vue({
+        data: {
+          persons: [
+            { id: 1, name: "小王", age: 18 },
+            { id: 2, name: "小张", age: 24 },
+            { id: 3, name: "小黄", age: 16 },
+            { id: 4, name: "小米", age: 33 },
+            { id: 5, name: "小爱", age: 21 },
+            { id: 6, name: "小赵", age: 19 },
+            { id: 7, name: "老王", age: 40 },
+          ],
+          keyword: "",
+          orderType: 1,
+        },
+
+        //计算属性（根据源数据计算出来的数据，作为渲染的数据来源）
+        computed: {
+          searchUsers() {
+            // 1.过滤
+            const filterData = this.persons.filter((person) => {
+              return person.name.indexOf(this.keyword) !== -1;
+            });
+
+            // 2.排序
+            if (this.orderType === 0) return filterData;
+            // 数组的sort()函数，会影响原数组
+            filterData.sort((a, b) => {
+              // 若return的是 a-b（表示升序）
+              // 若return的是 b-a (表示降序)
+              return this.orderType === 1 ? a.age - b.age : b.age - a.age;
+            });
+
+            return filterData;
+          },
+        },
+
+        methods: {
+          // 该sort()方法，作用在于控制orderType的值
+          sort(type) {
+            this.orderType = type;
+          },
+        },
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

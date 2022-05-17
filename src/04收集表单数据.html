@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04vue收集表单数据</title>
+  </head>
+  <body>
+    <div id="app">
+      <!--form表单 action属性,method属性 -->
+      <form action="###" @submit.prevent="handleSubmit">
+        <!-- 1.单行文本框 -->
+        <div>
+          <label for="user">请输入用户名：</label>
+          <input type="text" id="user" name="user" v-model="user.username" />
+        </div>
+
+        <!-- 2.密码文本框 -->
+        <div>
+          <label for="pass">请输入密码：</label>
+          <input
+            type="password"
+            id="pass"
+            name="pass"
+            v-model="user.password"
+          />
+        </div>
+
+        <!-- 3.一组复选框 -->
+        <div>
+          请输入喜欢的城市：
+          <label>
+            北京
+            <input
+              type="checkbox"
+              name="city"
+              value="beijing"
+              v-model="user.city"
+            />
+          </label>
+          <label>
+            上海
+            <input
+              type="checkbox"
+              name="city"
+              value="shanghai"
+              v-model="user.city"
+            />
+          </label>
+          <label>
+            广州
+            <input
+              type="checkbox"
+              name="city"
+              value="guangzhou"
+              v-model="user.city"
+            />
+          </label>
+        </div>
+
+        <!-- 4.一组单选框 -->
+        <div>
+          请选择性别：
+          <label>
+            男<input
+              type="radio"
+              name="sex"
+              value="male"
+              v-model="user.gender"
+            />
+          </label>
+          <label>
+            女<input
+              type="radio"
+              name="sex"
+              value="female"
+              v-model="user.gender"
+            />
+          </label>
+        </div>
+
+        <!-- 5.下拉选择框 -->
+        <div>
+          请选择老师：
+          <select name="teacher" v-model="user.teacher">
+            <option value="laoli">老李</option>
+            <option value="laozhang">老张</option>
+            <option value="laozhao">老赵</option>
+            <option value="laolin">老林</option>
+          </select>
+        </div>
+
+        <!-- 6.文本域 -->
+        <div>
+          请输入留言：
+          <textarea
+            name="message"
+            cols="30"
+            rows="3"
+            v-model="user.info"
+          ></textarea>
+        </div>
+
+        <!-- 7.提交按钮 -->
+        <button>提交</button>
+      </form>
+    </div>
+    <script src="../lib/vue.js"></script>
+
+    <script>
+      new Vue({
+        data: {
+          user: {
+            username: "",
+            password: "",
+            city: [],
+            gender: "male",
+            teacher: "laoli",
+            info: "",
+          },
+        },
+        methods: {
+          handleSubmit() {
+            console.log(this.user);
+          },
+        },
+      }).$mount("#app");
+    </script>
+  </body>
+</html>
